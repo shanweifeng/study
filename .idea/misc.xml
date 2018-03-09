@@ -10,17 +10,6 @@
     <option name="pathToConfigFileJava" value="$APPLICATION_HOME_DIR$/gegejia_format.xml" />
     <option name="selectedJavaProfile" value="gegejia_format" />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="modificationStamps">
-      <map>
-        <entry key="$PROJECT_DIR$/../IdeaWork1/spring-framework" value="5994482395602" />
-        <entry key="$PROJECT_DIR$/../spring-framework" value="5995147156670" />
-      </map>
-    </option>
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
   <component name="MarkdownProjectSettings">
     <PreviewSettings splitEditorLayout="SPLIT" splitEditorPreview="PREVIEW" useGrayscaleRendering="false" zoomFactor="1.25" maxImageWidth="0" showGitHubPageIfSynced="false" allowBrowsingInPreview="false" synchronizePreviewPosition="true" highlightPreviewType="NONE" highlightFadeOut="5" highlightOnTyping="true" synchronizeSourcePosition="true">
       <PanelProvider>
@@ -86,11 +75,11 @@
       <textMaps />
     </LinkMapSettings>
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="Bundled (Maven 3)" />
-      </MavenGeneralSettings>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
     </option>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
