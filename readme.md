@@ -7,3 +7,5 @@ git最新版本下载地址 https://git-scm.com/downloads
  如果下载的是安装版，则安装next之后再环境变量中将当前安装路径放入环境变量PATH中(如:D:\Program Files\Git\cmd)
 
  如果idea需要集成git工具则需要在工具-》version controller-》git中添加git启动路径(如:D:\Program Files\Git\cmd\git.exe)
+
+ 如果idea中需要clone gitHub上面工程，需要单独配置:工具-》version controller-》gitHub中添加https://github.com git中的登录名 登录密码 测试是否联通
