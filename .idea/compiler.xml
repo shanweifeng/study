@@ -24,12 +24,14 @@
         <processorPath useClasspath="true" />
         <module name="study-api" />
         <module name="study-base" />
+        <module name="study-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="study" target="1.8" />
       <module name="study-api" target="1.8" />
       <module name="study-base" target="1.8" />
+      <module name="study-test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

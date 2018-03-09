@@ -10,8 +10,12 @@
     <option name="pathToConfigFileJava" value="$APPLICATION_HOME_DIR$/gegejia_format.xml" />
     <option name="selectedJavaProfile" value="gegejia_format" />
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/study-api" />
+    <file type="web" url="file://$PROJECT_DIR$/study-test" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

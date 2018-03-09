@@ -26,6 +26,7 @@
   <name>study</name>
   <modules>
     <module>study-api</module>
+    <module>study-test</module>
   </modules>
   <groupId>com.study.support</groupId>
   <artifactId>study</artifactId>
