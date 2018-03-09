@@ -2,3 +2,8 @@
 git config http.sslVersion 查看TLSv 当前版本tlsv1.2
 如果查询不是当前版本  需要将低级版本升级到tlsv1.2 git config --global http.sslVersion tlsv1.2
 如果还不能clone工程 则需要查看具体原因
+
+git最新版本下载地址 https://git-scm.com/downloads
+ 如果下载的是安装版，则安装next之后再环境变量中将当前安装路径放入环境变量PATH中(如:D:\Program Files\Git\cmd)
+
+ 如果idea需要集成git工具则需要在工具-》version controller-》git中添加git启动路径(如:D:\Program Files\Git\cmd\git.exe)
