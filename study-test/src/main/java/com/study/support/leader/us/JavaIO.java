@@ -63,13 +63,13 @@ public class JavaIO {
     private static int byteArrayToInt(byte[] num,int endian)throws Exception{
         int result = 0;
         if(bigEndian == endian){
-            result = (num[0]<<24)&0xff+(num[1]<<16)&0xff+(num[2]<<8)&0xff+num[3]&0xff;
+            result = ((num[0]&0xff)<<24)+((num[1]&0xff)<<16)+((num[2]&0xff)<<8)+(num[3]&0xff);
         }else if(littileEndian == endian){
-            result = (num[3]<<24)&0xff+(num[2]<<16)&0xff+(num[1]<<8)&0xff+num[0]&0xff;
+            result = ((num[3]&0xff)<<24)+((num[2]&0xff)<<16)+((num[1]&0xff)<<8)+(num[0]&0xff);
         }else{
             throw new Exception("字节序异常");
         }
-        return 0;
+        return result;
     }
 
     public static void main(String[] agrs) throws Exception{
@@ -90,8 +90,8 @@ public class JavaIO {
         String pathLittile = "d://li.txt";
         writeFile(intToByte(a,bigEndian),path);
         writeFile(intToByte(a,littileEndian),pathLittile);
-        System.out.println(a+" 大头文件读取:"+readFileContext(path));
-        System.out.println(a+" 小偷文件读取:"+readFileContext(pathLittile));
+        System.out.println(a+" 大头文件读取:"+byteArrayToInt(readFileContext(path),bigEndian));
+        System.out.println(a+" 小偷文件读取:"+byteArrayToInt(readFileContext(pathLittile),littileEndian));
         //3 整理全套的Java IO类图并用PPT讲解说明
         //4  随机生成 Salary {name, baseSalary, bonus  }的记录，如“wxxx,10,1”，
         // 每行一条记录，总共1000万记录，写入文本文件（UFT-8编码），
@@ -120,7 +120,7 @@ public class JavaIO {
         byte[] num = new byte[4];
         FileInputStream in = null;
         try{
-            in = new FileInputStream(new File(""));
+            in = new FileInputStream(new File(path));
             in.read(num);
         }catch (Exception e){
 
@@ -133,7 +133,7 @@ public class JavaIO {
                 }
             }
         }
-        return null;
+        return num;
     }
 
     private static void writeFile(byte[] num,String path){
