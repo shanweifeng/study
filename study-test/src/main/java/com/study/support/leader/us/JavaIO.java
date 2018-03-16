@@ -1,11 +1,9 @@
 package com.study.support.leader.us;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Administrator on 2018/3/15.
@@ -37,6 +35,7 @@ public class JavaIO {
 
     static int bigEndian = 0;//java 中默认大头
     static int littileEndian = 1;
+    static String base = "qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
     private static byte[] intToByte(int num,int endian) throws Exception{
         System.out.println(num);
         byte[] result = new byte[4];
@@ -85,20 +84,75 @@ public class JavaIO {
 
         //2 分别用大头和小头模式将整数 a=10240写入到文件中（4个字节），
         // 并且再正确读出来，打印到屏幕上，同时截图UltraEdit里的二进制字节序列，做对比说明
-        int a = 10240;
+        /*int a = 10240;
         String path = "d://be.txt";
         String pathLittile = "d://li.txt";
         writeFile(intToByte(a,bigEndian),path);
         writeFile(intToByte(a,littileEndian),pathLittile);
         System.out.println(a+" 大头文件读取:"+byteArrayToInt(readFileContext(path),bigEndian));
-        System.out.println(a+" 小偷文件读取:"+byteArrayToInt(readFileContext(pathLittile),littileEndian));
+        System.out.println(a+" 小偷文件读取:"+byteArrayToInt(readFileContext(pathLittile),littileEndian));*/
         //3 整理全套的Java IO类图并用PPT讲解说明
+        //TODO 待整理
         //4  随机生成 Salary {name, baseSalary, bonus  }的记录，如“wxxx,10,1”，
         // 每行一条记录，总共1000万记录，写入文本文件（UFT-8编码），
         //然后读取文件，name的前两个字符相同的，其年薪累加，比如wx，100万，3个人，
         // 最后做排序和分组，输出年薪总额最高的10组：
         //wx, 200万，10人
         //lt, 180万，8人
+        //生成对象用于存储到文件
+        int tenThousand = 10000;
+        int thousand = 1000;
+        String salaryPath = "d://salary.txt";
+        //名字长度至少为2位
+        ObjectOutputStream out = null;
+        long start=0;
+        List<Salary> salaryList = new ArrayList<>();
+        try
+        {
+            out = new ObjectOutputStream(new FileOutputStream(salaryPath));
+            start = System.currentTimeMillis();
+            for(int i=0;i<tenThousand*thousand;i++){
+                Salary salary = new Salary();
+                salary.setName(getName());
+                salary.setBaseSalary(new Random().nextInt(10)*tenThousand);
+                salary.setBonus(new Random().nextInt(100)*tenThousand);
+                salaryList.add(salary);
+            }
+            out.writeObject(salaryList);
+            System.out.println("写传统耗时:"+(System.currentTimeMillis()-start));
+            out.flush();
+        }catch(Exception e){
+            System.out.println("ObjectInputStream exception:" + e );
+        }finally {
+            if(Objects.nonNull(out)){
+                out.close();
+            }
+        }
+
+        ObjectInputStream in = null;
+        salaryList.clear();
+        try
+        {
+            start = System.currentTimeMillis();
+            in = new ObjectInputStream(new FileInputStream(salaryPath));
+
+            salaryList.addAll((List<Salary>)in.readObject());
+            System.out.println("读传统耗时:"+(System.currentTimeMillis()-start));
+            System.out.println("第一个对象"+salaryList.get(0));
+        }catch (Exception e){
+            System.out.println("读异常");
+        }finally {
+            if(Objects.nonNull(in)){
+                in.close();
+            }
+        }
+        System.out.println("size:"+salaryList.size());
+        Map<String,List<Long>> result = salaryList.parallelStream().filter(x->{
+            x.setName(x.getName().substring(0,2));
+            x.setBaseSalary(x.getBaseSalary()+x.getBonus());
+            return true;
+        }).collect(Collectors.groupingBy(Salary::getName,Collectors.mapping(Salary::getBaseSalary,Collectors.toList())));
+
          /*加分题
 
         1：用装饰者模式实现如下的功能：
@@ -114,6 +168,16 @@ public class JavaIO {
 
         2: 用FileChannel的方式实现第四题，注意编码转换问题，并对比性能*/
 
+    }
+
+    public static String getName(){
+        int baseLen = 2;
+        baseLen = new Random().nextInt(10);
+        StringBuffer sb = new StringBuffer();
+        for (int i=0;i<baseLen;i++){
+            sb.append(base.charAt(new Random().nextInt(base.length())));
+        }
+        return sb.toString();
     }
 
     private static byte[] readFileContext(String path){
