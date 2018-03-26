@@ -42,13 +42,13 @@ public class IdentityHashMapTest {
         Integer b = 5;
         map.put(a,"100");
         map.put(b,"100");
-        System.out.println(map.size());
+        System.out.println("a=5,b=5:"+map.size());
         map.clear();
          a = Integer.MAX_VALUE-1;
          b = Integer.MAX_VALUE-1;
         map.put(a,"100");
         map.put(b,"100");
-        System.out.println(map.size());
-        System.out.println(a == b);
+        System.out.println("a=Integer.MAX_VALUE-1,b=Integer.MAX_VALUE-1:"+map.size());
+        System.out.println("a=Integer.MAX_VALUE-1,b=Integer.MAX_VALUE-1:a == b ->"+(a == b));
     }
 }
