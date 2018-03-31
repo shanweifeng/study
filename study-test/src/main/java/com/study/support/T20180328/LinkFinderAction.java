@@ -1,9 +1,9 @@
 package com.study.support.T20180328;
 
-import org.htmlparser.Parser;
+/*import org.htmlparser.Parser;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.util.NodeList;
+import org.htmlparser.util.NodeList;*/
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class LinkFinderAction extends RecursiveAction {
 
     @Override
     public void compute() {
-        if (!cr.visited(url)) {
+        /*if (!cr.visited(url)) {
             try {
                 List<RecursiveAction> actions = new ArrayList<RecursiveAction>();
                 URL uriLink = new URL(url);
@@ -58,6 +58,6 @@ public class LinkFinderAction extends RecursiveAction {
             } catch (Exception e) {
                 //ignore 404, unknown protocol or other server errors
             }
-        }
+        }*/
     }
 }

@@ -1,9 +1,9 @@
 package com.study.support.T20180328;
 
-import org.htmlparser.Parser;
+/*import org.htmlparser.Parser;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.util.NodeList;
+import org.htmlparser.util.NodeList;*/
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class LinkFinder implements Runnable {
 
     private void getSimpleLinks(String url) {
         //if not already visited
-        if (!linkHandler.visited(url)) {
+       /* if (!linkHandler.visited(url)) {
             try {
                 URL uriLink = new URL(url);
                 Parser parser = new Parser(uriLink.openConnection());
@@ -64,6 +64,6 @@ public class LinkFinder implements Runnable {
             } catch (Exception e) {
                 //ignore all errors for now
             }
-        }
+        }*/
     }
 }

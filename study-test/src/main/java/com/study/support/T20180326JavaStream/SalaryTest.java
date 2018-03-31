@@ -25,6 +25,7 @@ public class SalaryTest {
         long start = System.currentTimeMillis();
         Stream.generate(new SalarySupply()).limit(10000000).filter(x->x.getBaseSalary()*12+x.getBonus() > 100000)
                 .collect(Collectors.groupingBy(Salary::getName,Collectors.mapping(x->x.getBonus()+x.getBaseSalary()*12,Collectors.toList())))
+                //.collect(new MyCollector())
                 .forEach((k,v)->{
                     SalaryGroup s = new SalaryGroup();
                     s.setName(k);
@@ -40,44 +41,57 @@ public class SalaryTest {
         start = System.currentTimeMillis();
         result.stream().sorted(Comparator.comparing(SalaryGroup::getSalary).reversed()).limit(10).forEach(System.out::println);
         System.out.println("无parallel实现时间:"+(System.currentTimeMillis()-start+temp));
+        start = System.currentTimeMillis();
+        Stream.generate(new SalarySupply()).collect(new MyCollector()).stream().sorted(Comparator.comparing(SalaryGroup::getSalary).reversed()).forEach(System.out::println);
+        System.out.println("自定义collector耗时:"+(System.currentTimeMillis()-start));
     }
 }
 
-class MyCollector implements Collector<Salary,SalaryGroup,SalaryGroup>{
+class MyCollector implements Collector<Salary,Map<String,List<Integer>>,List<SalaryGroup>>{
 
     @Override
-    public Supplier<SalaryGroup> supplier() {
-        return ()->new SalaryGroup();
+    public Supplier<Map<String,List<Integer>>> supplier() {
+        return ()->new HashMap<>();
     }
 
     @Override
-    public BiConsumer<SalaryGroup, Salary> accumulator() {
-        return ((salaryGroup, salary) -> {
-            if(null == salaryGroup.getName()){
-                salaryGroup.setName(salary.getName());
-            }
-            salaryGroup.setSalary(salaryGroup.getSalary()+salary.getBaseSalary()*12+salary.getBonus());
-            salaryGroup.setCount(salaryGroup.getCount()+1);
-
+    public BiConsumer<Map<String,List<Integer>>, Salary> accumulator() {
+        return ((map, salary) -> {
+           if(Objects.isNull(map.get(salary.getName()))){
+               map.put(salary.getName(),new ArrayList<>());
+           }
+           map.get(salary.getName()).add(salary.getBaseSalary()*12+salary.getBonus());
         });
     }
 
     @Override
-    public BinaryOperator<SalaryGroup> combiner() {
-        return (salary1,salary2)->{
-
-            return null;
+    public BinaryOperator<Map<String,List<Integer>>> combiner() {
+        return (map1,map2)->{
+            map2.putAll(map1);
+            return map2;
         };
     }
 
     @Override
-    public Function<SalaryGroup, SalaryGroup> finisher() {
-        return null;
+    public Function<Map<String,List<Integer>>,List<SalaryGroup>> finisher()
+    {
+        List<SalaryGroup> result = new ArrayList<>();
+        return map->{
+            map.forEach((k,v)->{
+                SalaryGroup sg = new SalaryGroup();
+                sg.setName(k);
+                sg.setCount(v.size());
+                sg.setSalary(v.stream().mapToLong(x->x).reduce(0,Long::sum));
+                result.add(sg);
+            });
+            return result;
+        };
     }
 
     @Override
-    public Set<Characteristics> characteristics() {
-        return null;
+    public Set<Characteristics> characteristics()
+    {
+        return Collections.unmodifiableSet(EnumSet.of(Characteristics.UNORDERED));
     }
 }
 
@@ -135,6 +149,9 @@ class Salary{
     private String name;
     private Integer baseSalary;
     private Integer bonus;
+
+    public Salary() {
+    }
 
     public Salary(String name, Integer baseSalary, Integer bonus) {
         this.name = name;
