@@ -1,6 +1,8 @@
 package com.study.support.leader.us;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -101,7 +103,7 @@ public class JavaIO {
         //lt, 180万，8人
         //生成对象用于存储到文件
         int tenThousand = 10000;
-        int thousand = 1000;
+        int thousand = 100;
         String salaryPath = "d://salary.txt";
         //名字长度至少为2位
         ObjectOutputStream out = null;
@@ -116,9 +118,11 @@ public class JavaIO {
                 salary.setName(getName());
                 salary.setBaseSalary(new Random().nextInt(10)*tenThousand);
                 salary.setBonus(new Random().nextInt(100)*tenThousand);
-                salaryList.add(salary);
+                //salaryList.add(salary);
+                out.writeObject(salary);
+                out.flush();
             }
-            out.writeObject(salaryList);
+            //out.writeObject(salaryList);
             System.out.println("写传统耗时:"+(System.currentTimeMillis()-start));
             out.flush();
         }catch(Exception e){
@@ -135,10 +139,17 @@ public class JavaIO {
         {
             start = System.currentTimeMillis();
             in = new ObjectInputStream(new FileInputStream(salaryPath));
+            try{
+                while (true){
+                    Salary salary = (Salary) in.readObject();
+                    salaryList.add(salary);
+                }
+            }catch(Exception e){
+                System.out.println("读对象转换异常");
+            }
 
-            salaryList.addAll((List<Salary>)in.readObject());
+            //salaryList.addAll((List<Salary>)in.readObject());
             System.out.println("读传统耗时:"+(System.currentTimeMillis()-start));
-            System.out.println("第一个对象"+salaryList.get(0));
         }catch (Exception e){
             System.out.println("读异常");
         }finally {
@@ -147,12 +158,25 @@ public class JavaIO {
             }
         }
         System.out.println("size:"+salaryList.size());
-        Map<String,List<Long>> result = salaryList.parallelStream().filter(x->{
-            x.setName(x.getName().substring(0,2));
-            x.setBaseSalary(x.getBaseSalary()+x.getBonus());
-            return true;
-        }).collect(Collectors.groupingBy(Salary::getName,Collectors.mapping(Salary::getBaseSalary,Collectors.toList())));
+        Map<String,SalaryGroup> result = new HashMap<>();
+        salaryList.parallelStream().forEach(s->{
+            if(Objects.nonNull(result.get(s.getName().substring(0,s.getName().length()>1?2:s.getName().length())))){
+                try {
+                    result.get(s.getName().substring(0,s.getName().length()>1?2:s.getName().length())).increament(s.getBaseSalary()*12+s.getBonus());
+                }catch (Exception e){
+                    System.out.println(s.getName().substring(0,2)+result.get(s.getName().substring(0,2)));
+                }
 
+            }else{
+                SalaryGroup salaryGroup = new SalaryGroup();
+                salaryGroup.setNamePre(s.getName().substring(0,2));
+                salaryGroup.increament(s.getBaseSalary()*12+s.getBonus());
+               result.put(s.getName().substring(0,2),salaryGroup);
+            }
+        });
+        result.values().stream().sorted(Comparator.comparing(SalaryGroup::getSalary).reversed()).limit(10).forEach(s->{
+            System.out.println("namePre:"+s.getNamePre()+" total salary:"+s.getSalary()+"  count people "+s.getPeoples());
+        });
          /*加分题
 
         1：用装饰者模式实现如下的功能：
@@ -168,14 +192,21 @@ public class JavaIO {
 
         2: 用FileChannel的方式实现第四题，注意编码转换问题，并对比性能*/
 
+         RandomAccessFile randomAccessFile = new RandomAccessFile("d://salaryRan.txt","rw");
+        FileChannel fileChannel = randomAccessFile.getChannel();
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        for(int i=0;i<tenThousand*thousand;i++){
+
+        }
+
     }
 
     public static String getName(){
         int baseLen = 2;
-        baseLen = new Random().nextInt(10);
+        baseLen += new Random().nextInt(10);
         StringBuffer sb = new StringBuffer();
         for (int i=0;i<baseLen;i++){
-            sb.append(base.charAt(new Random().nextInt(base.length())));
+            sb.append(base.charAt(new Random().nextInt(base.length()-1)));
         }
         return sb.toString();
     }

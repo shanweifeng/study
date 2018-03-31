@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Salary implements Serializable{
     private static final long serialVersionUID = -9117278997775993831L;
     private String name;
+    private String alias;
     private long baseSalary;
     private int bonus;
 
@@ -32,6 +33,14 @@ public class Salary implements Serializable{
 
     public int getBonus() {
         return bonus;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public void setBonus(int bonus) {
