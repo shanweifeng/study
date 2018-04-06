@@ -25,7 +25,9 @@
     这里再说一遍happens-before的概念：如果两个操作不存在上述（前面8条 + 后面6条）任一一个happens-before规则，那么这两个操作就没有顺序的保障，JVM可以对这两个操作进行重排序。如果操作A happens-before操作B，那么操作A在内存上所做的操作对操作B都是可见的。
 
 volatile 与final是在1.5中重新修改了语义的，在构造方法中初始化的final变量(前提没有this引用泄露)在其他线程中是可见的。
-参见:http://ifeve.com/easy-happens-before/
+参见:
+http://ifeve.com/easy-happens-before/
+http://www.iteye.com/topic/260515
 http://cmsblogs.com/?p=2122  http://cmsblogs.com/?p=2102
 https://blog.csdn.net/ns_code/article/details/17348313等文章
 2 不依赖任何的同步机制（syncronized ,lock），有几种方式能实现多个线程共享变量之间的happens-before方式
