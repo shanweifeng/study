@@ -23,7 +23,7 @@ public class Test {
         System.out.println((int)'A');
         System.out.println((int)'1');
         System.out.println(new Random().nextInt(1));*/
-        char s = 'a';
+        /*char s = 'a';
         String bit = Integer.toBinaryString(s);
         System.out.println("bit = " + bit);
         String str = "中国";
@@ -44,7 +44,7 @@ public class Test {
 
         System.out.println(sl.containsAll(sl1));
         System.out.println(sl.removeAll(sl1));
-        System.out.println(sl.size());
-
+        System.out.println(sl.size());*/
+        System.out.println(Long.MAX_VALUE);
     }
 }
