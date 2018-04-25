@@ -6,6 +6,28 @@ code project:https://www.codeproject.com/Articles/7335/An-extensible-math-expres
 https://www.codeproject.com/
 http://dubbo.io/books/dubbo-user-book/references/xml/dubbo-consumer.html dubbo
 
+https://mp.weixin.qq.com/s?__biz=MzI4NTkzODY0Mg==&mid=2247483676&idx=1&sn=548bf14c1fc00abd668cd3d50ee15890&scene=21#wechat_redirect 大数据学习路线
+https://blog.csdn.net/prestigeding/article/details/70247486 源码分析mycat1.6之网络篇----前后端连接交互设计(mycat命令处理流程)
+https://blog.csdn.net/prestigeding/article/details/78885420 源码分析RocketMQ消息消费机制----消费者拉取消息机制  丁威
+https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651747755&idx=1&sn=fe6288c9ce334ad88d89d16fbfe5f045&chksm=bd12ace68a6525f0086730111d9e0ca949fdc578f3cc8f2e7bebfd1873a55793ffa7b6eb84d5&mpshare=1&scene=23&srcid=0322agwptFDqfObDx5b2uxGe#rd
+每天数百亿用户行为数据，美团点评怎么实现秒级转化分析？
+https://www.cnblogs.com/yy-cxd/p/6553624.html一分钟看懂Docker的网络模式和跨主机通信
+https://software.intel.com/zh-cn/articles/32067/ 《英特尔多核/多线程技术》
+https://mbd.baidu.com/newspage/data/landingshare?pageType=1&isBdboxFrom=1&context=%7B%22nid%22%3A%22news_10608812638576692966%22%2C%22sourceFrom%22%3A%22bjh%22%7D
+付费内容体系：一份组织内容的三层模型
+
+spring 事物 mysql事物
+
+https://github.com/weberhuang/Interview-Notebook
+
+http://cmsblogs.com/?p=2122  java并发
+
+MaxScale：实现MySQL读写分离与负载均衡的中间件利器
+DCL(Double Check Lock
+
+ffmpeg和mencoder
+
+
 ## github使用 https://github.com/cssmagic/blog/issues/49
 
 ## https://docs.oracle.com/javase/7/docs/ java文档
