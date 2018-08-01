@@ -28,8 +28,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="study" target="1.8" />
-      <module name="study-api" target="1.8" />
+      <module name="study" target="1.5" />
+      <module name="study-api" target="1.5" />
       <module name="study-base" target="1.8" />
       <module name="study-test" target="1.8" />
     </bytecodeTargetLevel>
